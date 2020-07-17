@@ -1,0 +1,33 @@
+{
+  "name": "management-server-algo5",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "algo5": {
+    "host": "49.50.163.31",
+    "port": 3306,
+    "user": "remote",
+    "password": "gagaHold#3",
+    "database": "study",
+    "connectionLimit": 10000,
+    "waitForConnections": true
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "server": {
+    "name": "::Algo5-SERVER::",
+    "port": 6373
+  },
+  "dependencies": {
+    "async": "^3.2.0",
+    "cors": "^2.8.5",
+    "date-utils": "^1.2.21",
+    "express": "^4.17.1",
+    "mysql": "^2.18.1",
+    "winston": "^3.3.3",
+    "winston-daily-rotate-file": "^4.5.0"
+  }
+}
