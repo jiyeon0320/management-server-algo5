@@ -6,7 +6,8 @@ const router = express.Router();
 router.post('/view-grid', function(req, res){
     logging.info('view-grid: '+ JSON.stringify(req.body));
 
-    let querystr = 'SELECT study_date, grade, original_id, dailyno FROM LIST_DAILY_ALGORITHM_TEST';
+    // let querystr = 'SELECT study_date, grade, original_id, dailyno FROM LIST_DAILY_ALGORITHM_TEST';
+    let querystr = 'SELECT * FROM LIST_DAILY_ALGORITHM_TEST';
     let queryparams = [];
     let rdata = {};
 
@@ -40,7 +41,7 @@ router.post('/update-grid',function(req, res){
     let rdata = {};
 
     let iquery = 'INSERT INTO LIST_DAILY_ALGORITHM_TEST (study_date, grade, original_id, trim_date) VALUES (?,?,?,?)';
-    let uquery = 'UPDATE LIST_DAILY_ALGORITHM_TEST SET study_date=?, grade=?, original_id=? WHERE dailyno = ? ';
+    let uquery = 'UPDATE LIST_DAILY_ALGORITHM_TEST SET study_date=?, grade=?, original_id=?, trim_date=? WHERE dailyno=?';
     let dquery = 'DELETE FROM LIST_DAILY_ALGORITHM_TEST WHERE dailyno=?';
 
     for(var i=0; i <list.length; i++){
@@ -57,14 +58,20 @@ router.post('/update-grid',function(req, res){
                 totalCount --;
                 //count가 0이 되면 완료!
                 if(totalCount === 0 && !isComplete){
+
                     res.status(200).json(rdata);
                     isComplete = true;
-                    rdata = result;
+                    rdata.result = 1;
+                    rdata = result[0];
                 }
                 
                 if(err){
                     logging.error('grid-I : ' + err);
+                    rdata.err = err;
+                    rdata.result=0;
+                    rdata.message='insert 오류';
                     res.status(400).json(rdata);
+                    // return;
                 }
                 
             });
@@ -75,20 +82,25 @@ router.post('/update-grid',function(req, res){
             console.log('update >>>');
             
             totalCount++;
-            let param = [list[i].study_date, list[i].grade, list[i].original_id, list[i].trim_date];
+            let param = [list[i].study_date, list[i].grade, list[i].original_id, list[i].trim_date, list[i].dailyno];
 
-            DB.query(uquery, param, function(){
+            DB.query(uquery, param, function(err, result){
                 totalCount--;
 
                 if(totalCount === 0 && !isComplete){
+                    rdata.result = 1;
                     res.status(200).json(rdata);
                     isComplete = true;
-                    rdata = result;
+                    rdata = result[0];
                 }
                 
                 if(err){
                     logging.error('grid-U : ' + err);
+                    rdata.err = err;
+                    rdata.result=0;
+                    rdata.message='update 오류';
                     res.status(400).json(rdata);
+                    // return;
                 }
 
             });
@@ -101,18 +113,23 @@ router.post('/update-grid',function(req, res){
             totalCount++;
             let param = [list[i].dailyno];
 
-            DB.query(uquery, param, function(){
+            DB.query(dquery, param, function(err, result){
                 totalCount--;
 
                 if(totalCount === 0 && !isComplete){
                     res.status(200).json(rdata);
+                    rdata.result = 1;
                     isComplete = true;
-                    rdata = result;
+                    rdata = result[0];
                 }
                 
                 if(err){
                     logging.error('grid-D : ' + err);
+                    rdata.err = err;
+                    rdata.result=0;
+                    rdata.message='delete 오류';
                     res.status(400).json(rdata);
+                    // return;
                 }
             });
         }
@@ -122,6 +139,7 @@ router.post('/update-grid',function(req, res){
             continue; //에러가 있는 것은 건너뛰고 계속해서 진행함
         }
     }//for 
+   
 });
 
 module.exports = router;
