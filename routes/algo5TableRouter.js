@@ -4,7 +4,7 @@ const router = express.Router();
 
 //table 조회
 router.post('/view-grid', function(req, res){
-    logging.info('view-grid: '+ JSON.stringify(req.body));
+    // logging.info('view-grid: '+ JSON.stringify(req.body));
 
     // let querystr = 'SELECT study_date, grade, original_id, dailyno FROM LIST_DAILY_ALGORITHM_TEST';
     let querystr = 'SELECT * FROM LIST_DAILY_ALGORITHM_TEST';
@@ -61,7 +61,7 @@ router.post('/update-grid',function(req, res){
 
                     res.status(200).json(rdata);
                     isComplete = true;
-                    rdata.result = 1;
+                    // rdata.result = 1;
                     rdata = result[0];
                 }
                 
@@ -73,7 +73,6 @@ router.post('/update-grid',function(req, res){
                     res.status(400).json(rdata);
                     // return;
                 }
-                
             });
         }
         
@@ -138,8 +137,8 @@ router.post('/update-grid',function(req, res){
             logging.error('grid 작업 상태 표시가 없음 :: ' + list[i].stat);
             continue; //에러가 있는 것은 건너뛰고 계속해서 진행함
         }
+        
     }//for 
-   
 });
 
 module.exports = router;
