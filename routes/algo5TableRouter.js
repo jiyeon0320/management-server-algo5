@@ -35,6 +35,7 @@ router.post('/update-grid',function(req, res){
     
     let list = req.body;    //stat의 변화가 있는 데이터 리스트
     console.log('list 개수 : '+ list.length);
+    console.log('list : '+ list);
 
     let totalCount = 0; //상태 수정 개수
     let isComplete = false;
