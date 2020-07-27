@@ -40,9 +40,32 @@ router.post('/update-grid',function(req, res){
     let isComplete = false;
     let rdata = {};
 
+    let sumquery = '';
     let iquery = 'INSERT INTO LIST_DAILY_ALGORITHM_TEST (study_date, grade, original_id, trim_date) VALUES (?,?,?,?)';
     let uquery = 'UPDATE LIST_DAILY_ALGORITHM_TEST SET study_date=?, grade=?, original_id=?, trim_date=? WHERE dailyno=?';
     let dquery = 'DELETE FROM LIST_DAILY_ALGORITHM_TEST WHERE dailyno=?';
+
+    //
+    sumquery += 'select a.* FROM abc a;';
+    sumquery += 'insert into .... ;';
+
+    // uqery + param 을 채워주고... 
+    // uquery = 'UPDATE LIST_DAILY_ALGORITHM_TEST SET study_date=?, grade=?, original_id=?, trim_date=? WHERE dailyno=?';
+    // param 채워주고 다 더하기 
+
+    /*
+    sumquery += uquery; // update 1 
+    sumquery += uquery; // update 2
+    sumquery += uquery; // update 3 
+    sumquery += uquery;
+
+    param = [];
+    */
+    
+
+    
+
+
 
     for(var i=0; i <list.length; i++){
         console.log('list idx: '+ list[i].stat);
@@ -58,11 +81,11 @@ router.post('/update-grid',function(req, res){
                 totalCount --;
                 //count가 0이 되면 완료!
                 if(totalCount === 0 && !isComplete){
-
-                    res.status(200).json(rdata);
+                    logging.info('INSERT DONE');
+                    rdata.result = 1;
                     isComplete = true;
-                    // rdata.result = 1;
-                    rdata = result[0];
+                    // rdata = result[0];
+                    res.status(200).json(rdata);
                 }
                 
                 if(err){
@@ -88,9 +111,8 @@ router.post('/update-grid',function(req, res){
 
                 if(totalCount === 0 && !isComplete){
                     rdata.result = 1;
-                    res.status(200).json(rdata);
                     isComplete = true;
-                    rdata = result[0];
+                    res.status(200).json(rdata);                    
                 }
                 
                 if(err){
@@ -116,10 +138,9 @@ router.post('/update-grid',function(req, res){
                 totalCount--;
 
                 if(totalCount === 0 && !isComplete){
-                    res.status(200).json(rdata);
                     rdata.result = 1;
                     isComplete = true;
-                    rdata = result[0];
+                    res.status(200).json(rdata);
                 }
                 
                 if(err){
