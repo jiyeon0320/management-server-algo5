@@ -41,31 +41,10 @@ router.post('/update-grid',function(req, res){
     let isComplete = false;
     let rdata = {};
 
-    let sumquery = '';
+    
     let iquery = 'INSERT INTO LIST_DAILY_ALGORITHM_TEST (study_date, grade, original_id, trim_date) VALUES (?,?,?,?)';
     let uquery = 'UPDATE LIST_DAILY_ALGORITHM_TEST SET study_date=?, grade=?, original_id=?, trim_date=? WHERE dailyno=?';
     let dquery = 'DELETE FROM LIST_DAILY_ALGORITHM_TEST WHERE dailyno=?';
-
-    //
-    sumquery += 'select a.* FROM abc a;';
-    sumquery += 'insert into .... ;';
-
-    // uqery + param 을 채워주고... 
-    // uquery = 'UPDATE LIST_DAILY_ALGORITHM_TEST SET study_date=?, grade=?, original_id=?, trim_date=? WHERE dailyno=?';
-    // param 채워주고 다 더하기 
-
-    /*
-    sumquery += uquery; // update 1 
-    sumquery += uquery; // update 2
-    sumquery += uquery; // update 3 
-    sumquery += uquery;
-
-    param = [];
-    */
-    
-
-    
-
 
 
     for(var i=0; i <list.length; i++){

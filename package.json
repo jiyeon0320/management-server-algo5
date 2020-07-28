@@ -10,7 +10,8 @@
     "password": "gagaHold#3",
     "database": "study",
     "connectionLimit": 10000,
-    "waitForConnections": true
+    "waitForConnections": true,
+    "multipleStatements": true
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

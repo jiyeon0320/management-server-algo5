@@ -27,7 +27,8 @@ async.waterfall(
     [function(callback){
         logging.info('DB 조회');
         //DB 연결
-        global.DB = mysql.createPool(config.algo5);
+        //package.json에 DB 정보가 있음
+        global.DB = mysql.createPool(config.algo5); 
         callback(null);
     }],
 
